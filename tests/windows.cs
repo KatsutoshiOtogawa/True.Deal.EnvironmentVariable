@@ -92,19 +92,28 @@ namespace tests
         }
 
         /// <summary>
-        /// Environment variables can be deleted by giving null as an argument to the SetEnvironmentVariable function.
+        /// Performing a WinGetEnvironmentValueKind on EnvironmentVariableTarget.Process results in an error.
         /// </summary>
         /// <param name="target"></param>
         [Test]
-        [TestCase("foo", EnvironmentVariableTarget.Process)]
-        [TestCase("foo", EnvironmentVariableTarget.User)]
-        public void Test51(string variable, EnvironmentVariableTarget target)
+        public void Test51()
         {
-            var valueKind = True.Deal.EnvironmentVariable.Environment.WinGetEnvironmentValueKind(variable, target);
-
             Assert.That(
-                () => True.Deal.EnvironmentVariable.Environment.WinSetEnvironmentVariable("NotExistsEnvironmentVariable", "")
-                ,Throws.Nothing
+                () => True.Deal.EnvironmentVariable.Environment.WinGetEnvironmentValueKind("foo", EnvironmentVariableTarget.Process)
+                ,Throws.TypeOf<ArgumentException>()
+            );
+        }
+
+        /// <summary>
+        /// System.IO.Exception when performing a WinGetEnvironmentValueKind on an environment variable that does not exist.
+        /// </summary>
+        /// <param name="target"></param>
+        [Test]
+        public void Test512()
+        {
+            Assert.That(
+                () => True.Deal.EnvironmentVariable.Environment.WinGetEnvironmentValueKind("NotExistsEnvironmentVariable", EnvironmentVariableTarget.User)
+                ,Throws.TypeOf<IOException>()
             );
         }
 
