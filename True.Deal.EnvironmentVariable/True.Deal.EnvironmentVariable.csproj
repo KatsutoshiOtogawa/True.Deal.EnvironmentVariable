@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Authors>OtogawaKatsutoshi</Authors>
+    <Copyright>Copyright (c) 2022 OtogawaKatsutoshi</Copyright>
+
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <Nullable>enable</Nullable>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<None Include="licenses/LICENSE.txt" Pack="true" PackagePath=""/>
+	<None Include="docs/readme.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+</Project>
+
