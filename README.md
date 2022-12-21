@@ -37,7 +37,7 @@ dotnet pack -c Release
 nuget orgのサイトからダウンロードして
 nupkgファイルの拡張子を.zipに変更、zipファイルを展開してください。
 
-dotnet6.0, 7.0 ベースのpwsh(version 6.3, 7.0)で下記のコマンドを打ちます。
+dotnet6.0, 7.0 ベースのpwsh(version 7.2, 7.3)で下記のコマンドを打ちます。
 
 ```powershell
 # pwshのバージョンと対応している.netのバージョンを使う。
