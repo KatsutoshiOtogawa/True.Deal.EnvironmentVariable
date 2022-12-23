@@ -8,6 +8,15 @@ namespace True.Deal.EnvironmentVariable
 {
     public class Environment
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="IOException"></exception>
         [SupportedOSPlatform("windows")]
         public static string? WinGetEnvironmentVariable(string variable, EnvironmentVariableTarget target = EnvironmentVariableTarget.Process)
         {
@@ -39,6 +48,13 @@ namespace True.Deal.EnvironmentVariable
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
         [SupportedOSPlatform("windows")]
         public static IDictionary WinGetEnvironmentVariables(EnvironmentVariableTarget target = EnvironmentVariableTarget.Process)
         {
@@ -60,7 +76,7 @@ namespace True.Deal.EnvironmentVariable
                     EnvironmentVariableTarget.Machine => Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
                     _ => throw new ArgumentException("ありえない"),
                 };
-                foreach (string name in regkey?.GetValueNames() ?? new string[] {""})
+                foreach (string name in regkey?.GetValueNames()!)
                 {
                     // キーとして扱っているので"(Default)"が混じる。
                     if (!String.IsNullOrEmpty(name))
