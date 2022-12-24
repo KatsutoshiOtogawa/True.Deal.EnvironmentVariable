@@ -11,7 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerShell.Commands.True.De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResGen", "ResGen\ResGen.csproj", "{AC55F836-9D25-4C3B-99FD-FBE60D69E7E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSGalleryModules", "PSGalleryModules\PSGalleryModules.csproj", "{77F61B52-5BF9-44F5-9328-EBDA0016618C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSGalleryModules", "PSGalleryModules\PSGalleryModules.csproj", "{77F61B52-5BF9-44F5-9328-EBDA0016618C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5FD4AE50-2669-46CF-9B26-C60CF20D6D7D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
