@@ -1,23 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFrameworks>net7.0;net6.0;netstandard2.0;net472;net462;net452;net40;net35</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Authors>OtogawaKatsutoshi</Authors>
     <Copyright>Copyright (c) 2022 OtogawaKatsutoshi</Copyright>
 	<PackageProjectUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</RepositoryUrl>
-	<VersionPrefix>0.1.1</VersionPrefix>
+	<VersionPrefix>0.4.1</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Description>
 		A library that gives windows os the correct operations on environment variables.
 		https://github.com/dotnet/runtime/issues/1442
 	</Description>
-    <Nullable>enable</Nullable>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)'=='net6.0' OR '$(TargetFramework)'=='net7.0'">
+	  <Nullable>enable</Nullable>
+	</PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+  </ItemGroup>
   <ItemGroup>
 	<None Include="licenses/LICENSE.txt" Pack="true" PackagePath="" />
 	<None Include="docs/readme.md" Pack="true" PackagePath="" />

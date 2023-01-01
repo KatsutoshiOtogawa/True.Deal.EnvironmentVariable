@@ -1,11 +1,16 @@
-﻿using System.Collections;
-using System.Diagnostics;
-using System.IO.IsolatedStorage;
-using System.Xml.Linq;
+﻿using System;
+using System.IO;
+using System.Collections;
+using System.Runtime.Versioning;
+using NUnit.Framework;
 
 namespace tests
 {
+
+#if NET6_0_OR_GREATER
     [SupportedOSPlatform("windows")]
+#elif NETSTANDARD2_0_OR_GREATER
+#endif
     public class Tests
     {
         [SetUp]
@@ -187,32 +192,32 @@ namespace tests
             Assert.That(value, Does.Not.ContainKey("(Default)"));
         }
 
-        /*
-                    It 'Set-WinEnvironmentVariable, if -Value is "", remove EnvironmentVariable' {
-                'hello' | Set-WinEnvironmentVariable -Name bar -Target Process
-                Set-WinEnvironmentVariable -Value "" -Name bar -Target Process
+    /*
+                It 'Set-WinEnvironmentVariable, if -Value is "", remove EnvironmentVariable' {
+            'hello' | Set-WinEnvironmentVariable -Name bar -Target Process
+            Set-WinEnvironmentVariable -Value "" -Name bar -Target Process
 
-                { Get-WinEnvironmentVariable -Name bar -Target Process } |
-                    Should -Throw -ErrorId "EnvironmentVariableNotFound,Microsoft.PowerShell.Commands.GetWinEnvironmentVariable"
-            }
+            { Get-WinEnvironmentVariable -Name bar -Target Process } |
+                Should -Throw -ErrorId "EnvironmentVariableNotFound,Microsoft.PowerShell.Commands.GetWinEnvironmentVariable"
+        }
 
-        BeforeAll {
-            $processguid = New-Guid
-            $userguid = New-Guid
-            Set-WinEnvironmentVariable -Value $processguid -Name foo -Target Process
-            Set-WinEnvironmentVariable -Value $userguid -Name foo -Target User -Force
-    }
+    BeforeAll {
+        $processguid = New-Guid
+        $userguid = New-Guid
+        Set-WinEnvironmentVariable -Value $processguid -Name foo -Target Process
+        Set-WinEnvironmentVariable -Value $userguid -Name foo -Target User -Force
+}
 
-    AfterAll {
-            Set-WinEnvironmentVariable -Value "" -Name foo -Target Process
-            Set-WinEnvironmentVariable -Value "" -Name foo -Target User -Force
+AfterAll {
+        Set-WinEnvironmentVariable -Value "" -Name foo -Target Process
+        Set-WinEnvironmentVariable -Value "" -Name foo -Target User -Force
 }
 It 'Get-WinEnvironmentVariable returns different environment variables are referenced for each Target.' {
 
-            $processfoo = Get - WinEnvironmentVariable - Name foo - Target Process
-            $userfoo = Get - WinEnvironmentVariable - Name foo - Target User
-            $processfoo | Should - Not - Be $userfoo
-        }
-        */
+        $processfoo = Get - WinEnvironmentVariable - Name foo - Target Process
+        $userfoo = Get - WinEnvironmentVariable - Name foo - Target User
+        $processfoo | Should - Not - Be $userfoo
+    }
+    */
     }
 }

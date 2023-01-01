@@ -8,10 +8,8 @@ windowsの環境変数操作用の処理を置きます。
 
 ## support environment
 
-dotnet 6, dotnet 7ランタイム環境のみ。
+dotnet 6, dotnet 7, netstandard2.0環境のみ。
 
-テストの煩雑さと.net frameworkの貧弱さからかなり手間がかかることが予想されます。
-.net frameworkに対応する気は今のところありません。
 
 https://www.neko3cs.net/entry/2020/03/14/095857
 System.Management.Automation
@@ -25,19 +23,6 @@ System.Management.Automation
 winget install Microsoft.DotNet.SDK.6
 winget install Microsoft.DotNet.SDK.7
 ```
-
-### powershell
-
-powershell開発用のモジュールをインストールする。
-dotnet standard
-
-dotnet new -i Microsoft.PowerShell.Standard.Module.Template
-
-### visual studio
-
-powershellの開発用モジュール作成に必要。
-
-[](https://marketplace.visualstudio.com/items?itemName=AdamRDriscoll.PowerShellToolsVS2022)
 
 ## release build
 
@@ -53,26 +38,10 @@ cd ../
 dotnet pack -c Release
 
 Test-Modules
-```
-
-## powershellでの使い方
-
-じきにPSGalleryにパッケージもアップロードするつもりです。
-
-nuget orgのサイトからダウンロードして
-nupkgファイルの拡張子を.zipに変更、zipファイルを展開してください。
-
-dotnet6.0, 7.0 ベースのpwsh(version 7.2, 7.3)で下記のコマンドを打ちます。
-
-```powershell
-# pwshのバージョンと対応している.netのバージョンを使う。
-Add-type -Path "true.deal.environmentvariable.0.1.1-alpha\lib\net6.0\True.Deal.EnvironmentVariable.dll"
 
 
-[True.Deal.EnvironmentVariable.Environment]::WinGetEnvironmentVariables()
-
-
-Import-Module
+ & "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe" /p:TargetFrameworkVersion=v4.5
+ & 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' /p:TargetFrameworkVersion=v4.8 /t:True_Deal_EnvironmentVariable
 ```
 
 $env:PSModulePath = $TestModulePath+$TestModulePathSeparator+$($env:PSModulePath)
@@ -84,4 +53,12 @@ $Env:PSModulePath =  "$($publishPath.Path);$($Env:PSModulePath)"
 
 Publish-Module -Name "True.Deal.EnvironmentVariable" -NugetApiKey $env:NUGET_API 
 -LicenseUri `
+
+## powershellで使う場合
+
+まだベータかつGet-WinEnvironmentVariableしか使えませんが、下記のサイトにレポジトリがあります。
+
+[Powershell.Commands.True.Deal.EnvironmentVariable](https://github.com/KatsutoshiOtogawa/PowerShell.Commands.True.Deal.EnvironmentVariable)
+
+
 
