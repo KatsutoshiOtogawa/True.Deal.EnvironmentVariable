@@ -187,6 +187,42 @@ namespace True.Deal.EnvironmentVariable
             }
         }
 
+        /// <summary>
+        /// 環境変数を削除する
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="target"></param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="System.Security.SecurityException">管理者権限が無い。</exception>
+        /// <exception cref="UnauthorizedAccessException">管理者権限が無い。</exception>
+        [SupportedOSPlatform("windows")]
+        public static void WinRemoveEnvironmentVariable(string variable, EnvironmentVariableTarget target = EnvironmentVariableTarget.Process)
+        {
+
+            if (target == EnvironmentVariableTarget.Process)
+            {
+                System.Environment.SetEnvironmentVariable(variable, "", target);
+                return;
+            }
+
+            RegistryKey? regkey = null;
+
+            try
+            {
+                regkey = target switch
+                {
+                    EnvironmentVariableTarget.User => Registry.CurrentUser.CreateSubKey(@"Environment"),
+                    EnvironmentVariableTarget.Machine => Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
+                    _ => throw new ArgumentException("ありえないEnvironmentVariabletargetの選択"),
+                };
+                regkey.DeleteValue(variable, false);
+            }
+            finally
+            {
+                regkey?.Close();
+            }
+        }
+
 
         // これ以降は必要ないかも。
 
@@ -223,7 +259,7 @@ namespace True.Deal.EnvironmentVariable
         {
             System.Environment.SetEnvironmentVariable(variable, value);
         }
-#elif (NET35 || NET40 ||  NET452 || NET462 || NET472 ||  NETSTANDARD2_0_OR_GREATER)
+#elif (NET35 || NET40 ||  NET452 || NET462 || NET472 || NETSTANDARD2_0_OR_GREATER)
 
         /// <summary>
         /// 
@@ -457,6 +493,49 @@ namespace True.Deal.EnvironmentVariable
                     regkey.SetValue(variable, value, valueKind);
                 }
 
+            }
+            finally
+            {
+                if (regkey != null)
+                {
+                    regkey.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 環境変数を削除する
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="target"></param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="System.Security.SecurityException">管理者権限が無い。</exception>
+        /// <exception cref="UnauthorizedAccessException">管理者権限が無い。</exception>
+        public static void WinRemoveEnvironmentVariable(string variable, EnvironmentVariableTarget target = EnvironmentVariableTarget.Process)
+        {
+
+            if (target == EnvironmentVariableTarget.Process)
+            {
+                System.Environment.SetEnvironmentVariable(variable, "", target);
+                return;
+            }
+
+            RegistryKey regkey = null;
+
+            try
+            {
+                switch (target)
+                {
+                    case EnvironmentVariableTarget.User:
+                        regkey = Registry.CurrentUser.CreateSubKey(@"Environment");
+                        break;
+                    case EnvironmentVariableTarget.Machine:
+                        regkey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+                        break;
+                    default:
+                        throw new ArgumentException("ありえないEnvironmentVariabletargetの選択");
+                }
+                regkey.DeleteValue(variable, false);
             }
             finally
             {
