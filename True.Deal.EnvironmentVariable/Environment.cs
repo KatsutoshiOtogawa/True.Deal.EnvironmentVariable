@@ -322,7 +322,7 @@ namespace True.Deal.EnvironmentVariable
         {
             System.Environment.SetEnvironmentVariable(variable, value);
         }
-#elif (NET35 || NET40 ||  NET452 || NET462 || NET472 || NETSTANDARD2_0_OR_GREATER)
+#elif (NET35 || NET40 ||  NET452 || NET462 || NET472 || NET48 || NET481 || NETSTANDARD2_0_OR_GREATER)
 
         /// <summary>
         /// 

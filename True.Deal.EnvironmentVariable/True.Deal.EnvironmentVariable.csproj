@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0;netstandard2.0;net472;net462;net452;net40;net35</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;netstandard2.0;net481;net48;net472;net462;net452;net40;net35</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Authors>OtogawaKatsutoshi</Authors>
     <Copyright>Copyright (c) 2022 OtogawaKatsutoshi</Copyright>
 	<PackageProjectUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</RepositoryUrl>
-	<VersionPrefix>0.5.0</VersionPrefix>
+	<VersionPrefix>0.5.2</VersionPrefix>
+	<tags>windows EnvironmentVariable Environment</tags>
     <Description>
 		A library that gives windows os the correct operations on environment variables.
 		https://github.com/dotnet/runtime/issues/1442
@@ -24,8 +25,8 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<None Include="resources\WinEnvironmentVariableResources.resx"  Condition="'$(TargetFramework)' != 'net45'" />
-		<EmbeddedResource Remove="resources\WinEnvironmentVariableResources.resx" Condition="'$(TargetFramework)' != 'net45'" />
+		<None Include="resources\WinEnvironmentVariableResources.resx"  Condition="'$(TargetFramework)' == 'net35'" />
+		<EmbeddedResource Remove="resources\WinEnvironmentVariableResources.resx" Condition="'$(TargetFramework)' == 'net35'" />
 	</ItemGroup>
   <ItemGroup>
 	<None Include="licenses/LICENSE.txt" Pack="true" PackagePath="" />

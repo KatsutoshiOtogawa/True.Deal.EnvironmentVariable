@@ -24,6 +24,20 @@ winget install Microsoft.DotNet.SDK.6
 winget install Microsoft.DotNet.SDK.7
 ```
 
+net452以前のビルドには下記の上でvisual studio 2017以前が必要になる。
+ビルドしなくてもエラーを消すためにインストールする必要がある。
+Turn Windows Feature on off -> .Net framework 3.5 check.
+## test
+
+### netcore系
+dotnet test
+### .net framework系
+visual studioから実行するしかない。
+```powershell
+ & "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
+ ```
+
+
 ## release build
 
 bin\Release\に出力されます。
@@ -36,6 +50,8 @@ cd Resgen/
 dotnet run --framework net6.0
 cd ../
 dotnet pack -c Release
+
+dotnet nuget push .\True.Deal.EnvironmentVariable\bin\Release\True.Deal.EnvironmentVariable.0.5.0.nupkg -k $Env:NUGET_API
 
 Test-Modules
 
