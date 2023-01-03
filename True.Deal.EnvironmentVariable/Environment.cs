@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 
 #if NET6_0_OR_GREATER
 using System.Runtime.Versioning;
@@ -36,12 +37,22 @@ namespace True.Deal.EnvironmentVariable
 
             try
             {
-                regkey = target switch
+                switch (target)
                 {
-                    EnvironmentVariableTarget.User => Registry.CurrentUser.OpenSubKey(@"Environment"),
-                    EnvironmentVariableTarget.Machine => Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
-                    _ => throw new ArgumentException("ありえあに"),
-                };
+                    case System.EnvironmentVariableTarget.User:
+                        regkey = Registry.CurrentUser.OpenSubKey(@"Environment");
+                        break;
+                    case System.EnvironmentVariableTarget.Machine:
+                        regkey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+                        break;
+                    default:
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+                        throw new ArgumentException(message);
+                }
                 // ありうるexpection追加
                 return (regkey?.GetValue(variable))?.ToString();
 
@@ -74,12 +85,22 @@ namespace True.Deal.EnvironmentVariable
 
             try
             {
-                regkey = target switch
+                switch (target)
                 {
-                    EnvironmentVariableTarget.User => Registry.CurrentUser.OpenSubKey(@"Environment"),
-                    EnvironmentVariableTarget.Machine => Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
-                    _ => throw new ArgumentException("ありえない"),
-                };
+                    case System.EnvironmentVariableTarget.User:
+                        regkey = Registry.CurrentUser.OpenSubKey(@"Environment");
+                        break;
+                    case System.EnvironmentVariableTarget.Machine:
+                        regkey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+                        break;
+                    default:
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+                        throw new ArgumentException(message);
+                }
                 foreach (string name in regkey?.GetValueNames()!)
                 {
                     // キーとして扱っているので"(Default)"が混じる。
@@ -112,12 +133,22 @@ namespace True.Deal.EnvironmentVariable
 
             try
             {
-                regkey = target switch
+                switch (target)
                 {
-                    EnvironmentVariableTarget.User => Registry.CurrentUser.OpenSubKey(@"Environment"),
-                    EnvironmentVariableTarget.Machine => Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
-                    _ => throw new ArgumentException("ありえあに"),
-                };
+                    case System.EnvironmentVariableTarget.User:
+                        regkey = Registry.CurrentUser.OpenSubKey(@"Environment");
+                        break;
+                    case System.EnvironmentVariableTarget.Machine:
+                        regkey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+                        break;
+                    default:
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+                        throw new ArgumentException(message);
+                }
                 return regkey?.GetValueKind(variable);
             }
             finally
@@ -150,12 +181,22 @@ namespace True.Deal.EnvironmentVariable
 
             try
             {
-                regkey = target switch
+                switch (target)
                 {
-                    EnvironmentVariableTarget.User => Registry.CurrentUser.CreateSubKey(@"Environment"),
-                    EnvironmentVariableTarget.Machine => Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
-                    _ => throw new ArgumentException("ありえないEnvironmentVariabletargetの選択"),
-                };
+                    case System.EnvironmentVariableTarget.User:
+                        regkey = Registry.CurrentUser.CreateSubKey(@"Environment");
+                        break;
+                    case System.EnvironmentVariableTarget.Machine:
+                        regkey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+                        break;
+                    default:
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+                        throw new ArgumentException(message);
+                }
 
                 // 新規に変数を作成するとき値が設定されていなかったらString型として登録する
                 if (RegistryValueKind.None == valueKind && regkey.GetValue(variable) is null)
@@ -163,13 +204,25 @@ namespace True.Deal.EnvironmentVariable
                     valueKind = RegistryValueKind.String;
                 }
 
-                valueKind = valueKind switch
+                switch (valueKind)
                 {
-                    RegistryValueKind.None => regkey.GetValueKind(variable),
-                    RegistryValueKind.String => RegistryValueKind.String,
-                    RegistryValueKind.ExpandString => RegistryValueKind.ExpandString,
-                    _ => throw new ArgumentException("ありえない環境変数の型の選択"),
-                };
+                    case RegistryValueKind.None:
+                        valueKind = regkey.GetValueKind(variable);
+                        break;
+                    case RegistryValueKind.String:
+                        valueKind = RegistryValueKind.String;
+                        break;
+                    case RegistryValueKind.ExpandString:
+                        valueKind = RegistryValueKind.ExpandString;
+                        break;
+                    default:
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedRegistryValueKind
+                        );
+                        throw new ArgumentException(message);
+                }
 
                 // 空は削除
                 if (string.IsNullOrEmpty(value))
@@ -209,12 +262,22 @@ namespace True.Deal.EnvironmentVariable
 
             try
             {
-                regkey = target switch
+                switch (target)
                 {
-                    EnvironmentVariableTarget.User => Registry.CurrentUser.CreateSubKey(@"Environment"),
-                    EnvironmentVariableTarget.Machine => Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
-                    _ => throw new ArgumentException("ありえないEnvironmentVariabletargetの選択"),
-                };
+                    case System.EnvironmentVariableTarget.User:
+                        regkey = Registry.CurrentUser.CreateSubKey(@"Environment");
+                        break;
+                    case System.EnvironmentVariableTarget.Machine:
+                        regkey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
+                        break;
+                    default:
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+                        throw new ArgumentException(message);
+                }
                 regkey.DeleteValue(variable, false);
             }
             finally
@@ -282,7 +345,16 @@ namespace True.Deal.EnvironmentVariable
 
             if (variable is null)
             {
-                throw new ArgumentException("variableにはnullを選択しないでください。");
+#if NET35
+                var message = string.Format(CultureInfo.CurrentCulture, "You cannot assign null to argument '{0}'", "variable");
+#else
+                var message = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "variable",
+                    WinEnvironmentVariableResources.VariableNotNullable
+                );
+#endif
+                throw new ArgumentException(message);
             }
 
             RegistryKey regkey = null;
@@ -298,7 +370,16 @@ namespace True.Deal.EnvironmentVariable
                         regkey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
                         break;
                     default:
-                        throw new ArgumentException("ありえあに");
+#if NET35
+                        var message = string.Format(CultureInfo.CurrentCulture, "An unexpected value was assigned to '{0}'.", "target");
+#else
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+#endif
+                        throw new ArgumentException(message);
                 }
                 // ありうるexpection追加
                 // return (regkey?.GetValue(variable))?.ToString();
@@ -352,7 +433,16 @@ namespace True.Deal.EnvironmentVariable
                         regkey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
                         break;
                     default:
-                        throw new ArgumentException("ありえあに");
+#if NET35
+                        var message = string.Format(CultureInfo.CurrentCulture, "An unexpected value was assigned to '{0}'.", "target");
+#else
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+#endif
+                        throw new ArgumentException(message);
                 }
 
                 foreach (string name in regkey.GetValueNames())
@@ -389,7 +479,16 @@ namespace True.Deal.EnvironmentVariable
 
             if (variable is null)
             {
-                throw new ArgumentException("variableにはnullを選択してください。");
+#if NET35
+                var message = string.Format(CultureInfo.CurrentCulture, "You cannot assign null to argument '{0}'", "variable");
+#else
+                var message = string.Format(
+                    CultureInfo.CurrentCulture,
+                    "variable",
+                    WinEnvironmentVariableResources.VariableNotNullable
+                );
+#endif
+                throw new ArgumentException(message);
             }
 
             try
@@ -403,7 +502,16 @@ namespace True.Deal.EnvironmentVariable
                         regkey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
                         break;
                     default:
-                        throw new ArgumentException("ありえあに");
+#if NET35
+                        var message = string.Format(CultureInfo.CurrentCulture, "An unexpected value was assigned to '{0}'.", "target");
+#else
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+#endif
+                        throw new ArgumentException(message);
                 }
                 // 変数が無ければexception
                 return regkey.GetValueKind(variable);
@@ -453,7 +561,16 @@ namespace True.Deal.EnvironmentVariable
                         regkey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
                         break;
                     default:
-                        throw new ArgumentException("ありえあに");
+#if NET35
+                        var message = string.Format(CultureInfo.CurrentCulture, "An unexpected value was assigned to '{0}'.", "target");
+#else
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+#endif
+                        throw new ArgumentException(message);
                 }
 
                 // 新規に変数を作成するとき値が設定されていなかったらString型として登録する
@@ -482,7 +599,16 @@ namespace True.Deal.EnvironmentVariable
                         valueKind = RegistryValueKind.ExpandString;
                         break;
                     default:
-                        throw new ArgumentException("ありえない環境変数の型の選択");
+#if NET35
+                        var message = string.Format(CultureInfo.CurrentCulture, "An unexpected value was assigned to '{0}'.", "target");
+#else
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedRegistryValueKind
+                        );
+#endif
+                        throw new ArgumentException(message);
                 }
 
                 if (String.IsNullOrEmpty(value))
@@ -533,7 +659,16 @@ namespace True.Deal.EnvironmentVariable
                         regkey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\Session Manager\Environment");
                         break;
                     default:
-                        throw new ArgumentException("ありえないEnvironmentVariabletargetの選択");
+#if NET35
+                        var message = string.Format(CultureInfo.CurrentCulture, "An unexpected value was assigned to '{0}'.", "target");
+#else
+                        var message = string.Format(
+                            CultureInfo.CurrentCulture,
+                            "target",
+                            WinEnvironmentVariableResources.UnexpectedEnvironmentVariableTarget
+                        );
+#endif
+                        throw new ArgumentException(message);
                 }
                 regkey.DeleteValue(variable, false);
             }
@@ -546,5 +681,5 @@ namespace True.Deal.EnvironmentVariable
             }
         }
 #endif
-    }
+                }
 }

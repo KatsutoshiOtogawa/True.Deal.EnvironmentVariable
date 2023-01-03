@@ -142,4 +142,13 @@
   <data name="EnvironmentVariableNotFoundOrEmpty" xml:space="preserve">
     <value>Cannot find EnvironmentVariable '{0}' or content is Empty.</value>
   </data>
+  <data name="UnexpectedEnvironmentVariableTarget" xml:space="preserve">
+    <value>An unexpected value was assigned to '{0}'.</value>
+  </data>
+  <data name="UnexpectedRegistryValueKind" xml:space="preserve">
+    <value>An unexpected value was assigned to '{0}'.</value>
+  </data>
+  <data name="VariableNotNullable" xml:space="preserve">
+    <value>You cannot assign null to argument '{0}'</value>
+  </data>
 </root>

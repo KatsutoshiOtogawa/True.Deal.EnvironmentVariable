@@ -7,8 +7,7 @@
     <Copyright>Copyright (c) 2022 OtogawaKatsutoshi</Copyright>
 	<PackageProjectUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</RepositoryUrl>
-	<VersionPrefix>0.4.2</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
+	<VersionPrefix>0.5.0</VersionPrefix>
     <Description>
 		A library that gives windows os the correct operations on environment variables.
 		https://github.com/dotnet/runtime/issues/1442
@@ -23,9 +22,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
+
+	<ItemGroup>
+		<None Include="resources\WinEnvironmentVariableResources.resx"  Condition="'$(TargetFramework)' != 'net45'" />
+		<EmbeddedResource Remove="resources\WinEnvironmentVariableResources.resx" Condition="'$(TargetFramework)' != 'net45'" />
+	</ItemGroup>
   <ItemGroup>
 	<None Include="licenses/LICENSE.txt" Pack="true" PackagePath="" />
-	<None Include="docs/readme.md" Pack="true" PackagePath="" />
+	<None Include="docs/readme.md" Pack="true" PackagePath=""   />
   </ItemGroup>
 </Project>
 
