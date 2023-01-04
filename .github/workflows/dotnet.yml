@@ -34,5 +34,10 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
       with:
         msbuild-architecture: x64
-    - name: Run Test
-      run: vstest.console.exe /Platform:x64 .\True.Deal.EnvironmentVariable\bin\Release\net462\True.Deal.EnvironmentVariable.dll
+    - name: Run Test version 4.6.2
+      run: dotnet vstest .\tests\bin\Debug\net462\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.6.2"
+
+    - name: Run Test version 4.7.2
+      run: dotnet vstest .\tests\bin\Debug\net472\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.7.2"
+    - name: Run Test version 4.8.0
+      run: dotnet vstest .\tests\bin\Debug\net48\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.8.0"
