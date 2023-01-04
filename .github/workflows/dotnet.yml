@@ -36,12 +36,8 @@ jobs:
         msbuild-architecture: x64
     - name: Run Test version 4.5.2
       run: dotnet vstest .\tests\bin\Debug\net452\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.5.2"
-    - name: Run Test version 4.6.0
-      run: dotnet vstest .\tests\bin\Debug\net46\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.6.0"
     - name: Run Test version 4.6.2
       run: dotnet vstest .\tests\bin\Debug\net462\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.6.2"
-    - name: Run Test version 4.7.0
-      run: dotnet vstest .\tests\bin\Debug\net47\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.7.0"
     - name: Run Test version 4.7.2
       run: dotnet vstest .\tests\bin\Debug\net472\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.7.2"
     - name: Run Test version 4.8.0
