@@ -248,6 +248,7 @@ namespace tests
             }
         }
 
+#if !CI
         /// <summary>
         /// Set EnvironmentVariable MachineTarget require Administrator authentication.
         /// </summary>
@@ -272,6 +273,7 @@ namespace tests
             );
 #endif
         }
+#endif
 
         /// <summary>
         /// SetEnvironmentVariable removes the environment variable if its value is given as null.
