@@ -30,3 +30,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Run Test
+      run: vstest.console.exe /Platform:x64 .\True.Deal.EnvironmentVariable\bin\Release\net462\True.Deal.EnvironmentVariable.dll
