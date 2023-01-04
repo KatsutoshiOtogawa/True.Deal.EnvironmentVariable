@@ -34,8 +34,6 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
       with:
         msbuild-architecture: x64
-    - name: Run Test version 4.5.0
-      run: dotnet vstest .\tests\bin\Debug\net45\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.5.0"
     - name: Run Test version 4.5.2
       run: dotnet vstest .\tests\bin\Debug\net452\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.5.2"
     - name: Run Test version 4.6.0
