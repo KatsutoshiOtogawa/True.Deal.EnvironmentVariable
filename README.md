@@ -29,10 +29,22 @@ net452以前のビルドには下記の上でvisual studio 2017以前が必要�
 Turn Windows Feature on off -> .Net framework 3.5 check.
 ## test
 
+
+dotnet コマンドでnuspecファイルは作れないので、
+nugetコマンドをまた別にインストールする必要がある。
+
+```powershell
+winget install Microsoft.NuGet
+```
+
+
 ### netcore系
 dotnet test
 ### .net framework系
 visual studioから実行するしかない。
+
+& "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools"
+
 ```powershell
  & "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
  ```
@@ -50,6 +62,8 @@ cd Resgen/
 dotnet run --framework net6.0
 cd ../
 dotnet pack -c Release
+
+dotnet pack -c Release .\True.Deal.EnvironmentVariable\True.Deal.EnvironmentVariable.csproj
 
 dotnet nuget push .\True.Deal.EnvironmentVariable\bin\Release\True.Deal.EnvironmentVariable.0.5.0.nupkg -k $Env:NUGET_API
 

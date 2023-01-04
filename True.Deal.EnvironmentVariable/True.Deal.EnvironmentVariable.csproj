@@ -7,11 +7,12 @@
     <Copyright>Copyright (c) 2022 OtogawaKatsutoshi</Copyright>
 	<PackageProjectUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</PackageProjectUrl>
     <RepositoryUrl>https://github.com/KatsutoshiOtogawa/True.Deal.EnvironmentVariable</RepositoryUrl>
-	<VersionPrefix>0.5.2</VersionPrefix>
-	<tags>windows EnvironmentVariable Environment</tags>
-    <Description>
-		A library that gives windows os the correct operations on environment variables.
-		https://github.com/dotnet/runtime/issues/1442
+	<RepositoryType>git</RepositoryType>
+    <VersionPrefix>0.6.0</VersionPrefix>
+	<PackageTags>windows EnvironmentVariable Environment</PackageTags>
+    <!-- <PackageIcon>icon.png</PackageIcon> -->
+    <Description> There is a bug in windows and dotnet that can break environment variables.
+		This library is designed to avoid those bugs and manipulate environment variables.
 	</Description>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
