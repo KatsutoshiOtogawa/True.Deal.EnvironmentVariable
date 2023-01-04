@@ -10,9 +10,9 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  windows2022_test:
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v3
@@ -47,3 +47,27 @@ jobs:
       run: dotnet vstest .\tests\bin\Debug\net48\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.8.0"
     - name: Run Test version 4.8.1
       run: dotnet vstest .\tests\bin\Debug\net481\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.8.1"
+  windows2019_test:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Generate resources
+      run: cd Resgen && dotnet run --no-restore -f net6.0
+      
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        msbuild-architecture: x64
+    - name: Run Test version 4.0.0
+      run: dotnet vstest .\tests\bin\Debug\net40\*.dll /Platform:x64 /Framework:".NETFramework,Version=v4.0.0"
