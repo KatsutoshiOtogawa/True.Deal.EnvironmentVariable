@@ -1,94 +1,42 @@
 
-## 
+## True.Deal.EnvironmentVariable
 
 windowsの環境変数にはバグがあります。
 そのバグをMSがなんとかする気が無くて、dotnetのissueでもpwshのissueでも
 ずっと蹴られていて、解決する事が一生なさそうなのでここにバグを回避するための
 windowsの環境変数操作用の処理を置きます。
 
-## support environment
+There is a bug in windows and dotnet that can break environment variables.
+This library is designed to avoid those bugs and manipulate environment variables.
 
-dotnet 6, dotnet 7, netstandard2.0環境のみ。
+https://github.com/dotnet/runtime/issues/1442
 
+## Supported platforms
 
-https://www.neko3cs.net/entry/2020/03/14/095857
-System.Management.Automation
-## development 
+It is compatible with most of the windows environments in use today.
 
-### dotnet
+- .NET Framework 3.5+
+- .NET Standard 2.0+
+- dotnet6.0+
 
-最終的なビルドはコマンドラインから行うので下の者が必要。
+Net Framework 4.5 or lower version should work, although I have not tested it because I do not have a verification environment.
 
-```powershell
-winget install Microsoft.DotNet.SDK.6
-winget install Microsoft.DotNet.SDK.7
+## how to use
+
+整備中
+
+```csharp
+
+// get User EnvironmentVariable
+// get User EnvironemntVariable 
+// True.Deal.EnvironmentVariable.Environment.WinGetEnvironmentValueKind("fooEnvironmentVariable", EnvironmentVariableTarget.User);
+
+// set User EnvironmentVariable with RegistryValueKind
+
 ```
 
-net452以前のビルドには下記の上でvisual studio 2017以前が必要になる。
-ビルドしなくてもエラーを消すためにインストールする必要がある。
-Turn Windows Feature on off -> .Net framework 3.5 check.
-## test
+## powershellで使いたい
 
+まだ、0系列ですが、 下記のPSGalleryにモジュールがあるのでそれを使ってください。
 
-dotnet コマンドでnuspecファイルは作れないので、
-nugetコマンドをまた別にインストールする必要がある。
-
-```powershell
-winget install Microsoft.NuGet
-```
-
-
-### netcore系
-dotnet test
-### .net framework系
-visual studioから実行するしかない。
-
-& "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools"
-
-```powershell
- & "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
- ```
-
-
-## release build
-
-bin\Release\に出力されます。
-
-```bash
-cd Resgen/
-# dotnet net6.0ように出力
-# 吐くソースコードはdotnet run --framework net6.0でもnet7.0でも変わらない。
-# 指定しないと動かないので指定している。
-dotnet run --framework net6.0
-cd ../
-dotnet pack -c Release
-
-dotnet pack -c Release .\True.Deal.EnvironmentVariable\True.Deal.EnvironmentVariable.csproj
-
-dotnet nuget push .\True.Deal.EnvironmentVariable\bin\Release\True.Deal.EnvironmentVariable.0.5.0.nupkg -k $Env:NUGET_API
-
-Test-Modules
-
-
- & "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe" /p:TargetFrameworkVersion=v4.5
- & 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' /p:TargetFrameworkVersion=v4.8 /t:True_Deal_EnvironmentVariable
-```
-
-$env:PSModulePath = $TestModulePath+$TestModulePathSeparator+$($env:PSModulePath)
-
-現在のセッションにpublish配下のプロジェクトを入れる。
-
-$publishPath = Resolve-path publish
-$Env:PSModulePath =  "$($publishPath.Path);$($Env:PSModulePath)"
-
-Publish-Module -Name "True.Deal.EnvironmentVariable" -NugetApiKey $env:NUGET_API 
--LicenseUri `
-
-## powershellで使う場合
-
-まだベータかつGet-WinEnvironmentVariableしか使えませんが、下記のサイトにレポジトリがあります。
-
-[Powershell.Commands.True.Deal.EnvironmentVariable](https://github.com/KatsutoshiOtogawa/PowerShell.Commands.True.Deal.EnvironmentVariable)
-
-
-
+[PSGallery](https://www.powershellgallery.com/packages/True.Deal.EnvironmentVariable/)
